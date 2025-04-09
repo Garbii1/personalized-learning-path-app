@@ -17,10 +17,10 @@ app.use(express.json()); // Body parser for JSON format
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes (We'll add these later)
-// app.use('/api/auth', require('./routes/authRoutes'));
-// app.use('/api/users', require('./routes/userRoutes'));
-// app.use('/api/resources', require('./routes/resourceRoutes'));
-// app.use('/api/paths', require('./routes/pathRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/resources', require('./routes/resourceRoutes'));
+app.use('/api/paths', require('./routes/pathRoutes'));
 
 // Basic Error Handling (Optional but good practice)
 app.use((err, req, res, next) => {
