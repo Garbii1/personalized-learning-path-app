@@ -1,32 +1,16 @@
-# .github/workflows/deploy-backend.yml
-name: Deploy Backend to Railway
-
+name: Deploy to Railway
 on:
   push:
-    branches: [ main ] # Or your deployment branch
-    paths:
-      - 'server/**' # Only run if server code changes
-      - '.github/workflows/deploy-backend.yml' # Or if workflow file changes
-
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/railwayapp/cli:latest
+    env:
+      SVC_ID: 091fd195-a786-4b30-b573-a7de0f33e509
+      RAILWAY_TOKEN: ${{ env.RAILWAY_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-
-      - uses: railwayapp/cli@v3.0.1 # Use Railway's official CLI action
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }} # Store Railway token in GitHub secrets
-          # Optional: Specify service if needed (if multiple services in Railway project)
-          # service: 'backend-service-name'
-          # Optional: Change directory if your server isn't at the root of the repo check out
-          # PWD: './server' # Railway action runs 'railway up' in specified dir or root
-        env:
-          # Ensure env vars needed for build (if any) are here or in Railway UI
-          # MONGODB_URI and JWT_SECRET should be set in Railway UI, not here.
-          RAILWAY_ENVIRONMENT: production # Specify environment if you use them
-
-      # Note: The railway/cli-action handles the 'railway up' command.
-      # Ensure your Railway project is linked to this GitHub repo.
-      # The action assumes 'railway up' deploys the right service based on linked project/repo.
-      # If deploying only the server/ folder, ensure Root Directory is set in Railway Service Settings.
+      - run: railway up --service=${{ env.SVC_ID }}
