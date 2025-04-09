@@ -1,32 +1,26 @@
-# .github/workflows/deploy-backend.yml
+# .github/workflows/deploy-backend.yml (TEMPORARY DEBUG)
 name: Deploy Backend to Railway
 
 on:
   push:
-    branches: [ main ] # Or your deployment branch
+    branches: [ main ]
     paths:
-      - 'server/**' # Only run if server code changes
-      - '.github/workflows/deploy-backend.yml' # Or if workflow file changes
+      - 'server/**'
+      - '.github/workflows/deploy-backend.yml'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - uses: railwayapp/cli-action@v1 # Use Railway's official CLI action
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }} # Store Railway token in GitHub secrets
-          # Optional: Specify service if needed (if multiple services in Railway project)
-          # service: 'backend-service-name'
-          # Optional: Change directory if your server isn't at the root of the repo check out
-          # PWD: './server' # Railway action runs 'railway up' in specified dir or root
-        env:
-          # Ensure env vars needed for build (if any) are here or in Railway UI
-          # MONGODB_URI and JWT_SECRET should be set in Railway UI, not here.
-          RAILWAY_ENVIRONMENT: production # Specify environment if you use them
+      - name: Test basic command
+        run: echo "Workflow is running basic steps."
 
-      # Note: The railway/cli-action handles the 'railway up' command.
-      # Ensure your Railway project is linked to this GitHub repo.
-      # The action assumes 'railway up' deploys the right service based on linked project/repo.
-      # If deploying only the server/ folder, ensure Root Directory is set in Railway Service Settings.
+      # - name: Deploy to Railway # TEMPORARILY COMMENTED OUT
+      #   uses: railwayapp/cli-action@v1
+      #   with:
+      #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
+      #   env:
+      #     RAILWAY_ENVIRONMENT: production
