@@ -1,23 +1,16 @@
-# .github/workflows/deploy-backend.yml
-name: Deploy Backend to Railway
-
+name: Deploy to Railway
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'server/**'
-      - '.github/workflows/deploy-backend.yml'
-
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/railwayapp/cli:latest
+    env:
+      SVC_ID: my-service-id
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
-      - name: Check out code # Added name for clarity
-        uses: actions/checkout@v3
-
-      - name: Deploy to Railway # Make sure this step is present and uncommented
-        uses: railwayapp/cli-action@v1
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-        env:
-          RAILWAY_ENVIRONMENT: production # Optional, adjust as needed
+      - uses: actions/checkout@v3
+      - run: railway up --service=${{ env.SVC_ID }}
