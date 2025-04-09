@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: railwayapp/cli-action@v1 # Use Railway's official action
+      - uses: railway/cli@v3.5.2 # Use Railway's official action
         with:
           railway_token: ${{ secrets.RAILWAY_TOKEN }} # Store Railway token in GitHub secrets
           # Optional: Specify service if needed (if multiple services in Railway project)
