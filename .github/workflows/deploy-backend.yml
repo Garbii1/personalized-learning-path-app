@@ -1,4 +1,4 @@
-# .github/workflows/deploy-backend.yml (TEMPORARY DEBUG)
+# .github/workflows/deploy-backend.yml
 name: Deploy Backend to Railway
 
 on:
@@ -12,15 +12,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Check out code # Added name for clarity
         uses: actions/checkout@v3
 
-      - name: Test basic command
-        run: echo "Workflow is running basic steps."
-
-      # - name: Deploy to Railway # TEMPORARILY COMMENTED OUT
-      #   uses: railwayapp/cli-action@v1
-      #   with:
-      #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
-      #   env:
-      #     RAILWAY_ENVIRONMENT: production
+      - name: Deploy to Railway # Make sure this step is present and uncommented
+        uses: railwayapp/cli-action@v1
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+        env:
+          RAILWAY_ENVIRONMENT: production # Optional, adjust as needed
