@@ -46,11 +46,11 @@ function HeroSection() {
         preload="auto"
         poster={heroPoster} // <-- Added Poster Image
       >
-        {/* === Multiple Sources for Compatibility === */}
-        {/* Provide WebM first (often preferred by supporting browsers) */}
-        <source src={currentVideo.webm} type="video/webm" />
-        {/* Fallback to MP4 */}
+        {/* === SWAPPED Source Order === */}
+        {/* Provide MP4 first */}
         <source src={currentVideo.mp4} type="video/mp4" />
+        {/* Fallback to WebM */}
+        <source src={currentVideo.webm} type="video/webm" />
         {/* === End Sources === */}
         Your browser does not support the video tag or the provided formats.
       </video>

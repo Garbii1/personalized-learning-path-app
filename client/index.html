@@ -2,12 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
+    {/* --- CORRECTED FAVICON/ASSET LINKS --- */}
+    {/* Assuming these files exist directly inside client/public/ */}
+    <link rel="icon" type="image/png" href="/logo.png" /> {/* Main icon */}
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" /> {/* Traditional ico */}
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png" /> {/* iOS icon */}
+    {/* You usually only need one primary 'icon' link unless targeting specific sizes/purposes explicitly */}
+    {/* Consider removing duplicate rel="icon" unless they serve different 'sizes' attributes */}
+    <link rel="icon" type="image/png" sizes="192x192" href="/logo192.png" /> {/* Example with sizes */}
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" /> {/* Example with sizes */}
+
+    {/* Manifest link (assuming manifest.json is in client/public/) */}
+    <link rel="manifest" href="/manifest.json" />
+    {/* --- END CORRECTED LINKS --- */}
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learning Paths</title>
+    <title>Personalized Learning Path Generator</title> {/* Title is correct */}
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.jsx"></script> {/* This path is handled by Vite, it's correct */}
   </body>
 </html>
