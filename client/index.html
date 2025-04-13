@@ -2,25 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    {/* --- CORRECTED FAVICON/ASSET LINKS --- */}
-    {/* Assuming these files exist directly inside client/public/ */}
-    <link rel="icon" type="image/png" href="/logo.png" /> {/* Main icon */}
-    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" /> {/* Traditional ico */}
-    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png" /> {/* iOS icon */}
-    {/* You usually only need one primary 'icon' link unless targeting specific sizes/purposes explicitly */}
-    {/* Consider removing duplicate rel="icon" unless they serve different 'sizes' attributes */}
-    <link rel="icon" type="image/png" sizes="192x192" href="/logo192.png" /> {/* Example with sizes */}
-    <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" /> {/* Example with sizes */}
 
-    {/* Manifest link (assuming manifest.json is in client/public/) */}
-    <link rel="manifest" href="/manifest.json" />
-    {/* --- END CORRECTED LINKS --- */}
+    {/* --- Favicon/Asset Links (Pointing to files in client/public/) --- */}
+    {/* Ensure these files exist in client/public/ */}
+    <link rel="icon" type="image/png" href="/logo.png" /> {/* Ensure logo.png is in client/public */}
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" /> {/* Ensure favicon.ico is in client/public */}
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png" /> {/* Ensure apple-touch-icon.png is in client/public */}
+    <link rel="icon" type="image/png" sizes="192x192" href="/logo192.png" /> {/* Ensure logo192.png is in client/public */}
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" /> {/* Ensure logo512.png is in client/public */}
+    <link rel="manifest" href="/manifest.json" /> {/* Ensure manifest.json is in client/public */}
+    {/* --- End Asset Links --- */}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personalized Learning Path Generator</title> {/* Title is correct */}
+    <title>Personalized Learning Path Generator</title> {/* Or "Learning Paths" */}
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script> {/* This path is handled by Vite, it's correct */}
+    {/* This script tag is correct for client/index.html - Vite handles it */}
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
