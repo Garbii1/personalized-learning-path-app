@@ -1,158 +1,126 @@
-import React, { useState, useEffect } from 'react';
+// client/src/pages/DashboardPage.jsx (Conceptual Example)
+import React, { useEffect, useState } from 'react';
+import { fetchActivePath, getProfile } from '../services/api'; // Assuming you have these
 import { Link } from 'react-router-dom';
-import { getProfile, fetchActivePath } from '../services/api'; // Adjust path
 
 function DashboardPage() {
-  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [activePath, setActivePath] = useState(null);
-  const [pathNodes, setPathNodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError('');
       try {
-        // Fetch profile and active path in parallel
-        const [profileResponse, pathResponse] = await Promise.allSettled([
-          getProfile(),
-          fetchActivePath()
-        ]);
+        setLoading(true);
+        setError('');
+        const profileRes = await getProfile();
+        setProfile(profileRes.data);
 
-        if (profileResponse.status === 'fulfilled') {
-          setUser(profileResponse.value.data);
-        } else {
-          console.error("Failed to fetch profile:", profileResponse.reason);
-          setError('Could not load your profile information.');
-          // Decide if you want to proceed without profile info or show blocking error
+        try {
+            const pathRes = await fetchActivePath();
+            setActivePath(pathRes.data);
+        } catch (pathError) {
+             if (pathError.response && pathError.response.status === 404) {
+                setActivePath(null); // Explicitly set to null if no active path found
+             } else {
+                console.error("Error fetching active path:", pathError);
+                setError('Could not load learning path details.');
+             }
         }
 
-        if (pathResponse.status === 'fulfilled') {
-          setActivePath(pathResponse.value.data.path);
-          setPathNodes(pathResponse.value.data.nodes || []);
-        } else {
-          // Handle expected 404 for no active path gracefully
-          if (pathResponse.reason.response?.status === 404) {
-            setActivePath(null); // No active path found
-            setPathNodes([]);
-          } else {
-            console.error("Failed to fetch active path:", pathResponse.reason);
-            // Don't overwrite profile error if it exists
-            if (!error) setError('Could not load your learning path.');
-          }
-        }
-
-      } catch (err) { // Catch any unexpected errors during Promise.allSettled or setup
-        console.error("Dashboard fetch error:", err);
-        setError('An unexpected error occurred while loading your dashboard.');
+      } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+        setError('Failed to load dashboard data. Please try again.');
+        // Handle token expiry / redirect to login if 401?
       } finally {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, []); // Empty dependency array means run once on mount
-
-  // Calculate Progress
-  const completedNodes = pathNodes.filter(node => node.completionStatus === 'Completed').length;
-  const totalNodes = pathNodes.length;
-  const progressPercentage = totalNodes > 0 ? Math.round((completedNodes / totalNodes) * 100) : 0;
-
-  // Find upcoming nodes (first 3 not completed)
-  const upcomingNodes = pathNodes.filter(node => node.completionStatus !== 'Completed').slice(0, 3);
+  }, []);
 
   if (loading) {
-    return <div className="text-center mt-10">Loading Dashboard...</div>;
+    return <div className="text-center py-10">Loading dashboard...</div>; // Add a spinner later
   }
 
-  if (error && !user) { // If profile failed to load, show error prominently
-      return <div className="text-center mt-10 text-red-600">Error: {error} Please try refreshing.</div>;
+  if (error) {
+     return <div className="text-center py-10 text-red-600 bg-red-100 p-4 rounded-md">{error}</div>;
   }
 
+  // Calculate progress (example)
+  const totalNodes = activePath?.nodes?.length || 0;
+  const completedNodes = activePath?.nodes?.filter(node => node.completionStatus === 'Completed').length || 0;
+  const progressPercent = totalNodes > 0 ? Math.round((completedNodes / totalNodes) * 100) : 0;
 
   return (
-    <div className="container mx-auto px-4 py-6">
-        {error && ( // Show non-blocking errors (e.g., path fetch error) as alerts
-             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span className="block sm:inline">{error}</span>
-             </div>
-         )}
-
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
-        Welcome back, {user?.name || 'Learner'}!
+    <div className="space-y-6 md:space-y-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+        Welcome back, {profile?.name || 'Learner'}!
       </h1>
 
-      {/* Learning Path Section */}
-      <section className="bg-white p-6 rounded-lg shadow border border-gray-200 mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Your Learning Journey</h2>
-        {activePath ? (
-          <>
-            <h3 className="text-xl font-medium text-indigo-700 mb-2">{activePath.title}</h3>
-            <p className="text-gray-600 mb-4">{activePath.description || 'Continue your path!'}</p>
+      {/* Path Overview Card */}
+      <section className="bg-white p-4 sm:p-6 shadow rounded-lg border border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Your Learning Path</h2>
+        {activePath?.path ? (
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-gray-900">{activePath.path.title}</h3>
+            <p className="text-sm text-gray-600">{activePath.path.description || 'Continue your learning journey.'}</p>
 
-            {/* Progress Bar */}
-            {totalNodes > 0 && (
-                <div className="mb-4">
-                    <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-700">Progress</span>
-                        <span className="text-sm font-medium text-gray-700">{progressPercentage}% ({completedNodes}/{totalNodes})</span>
+             {/* Progress Bar */}
+             {totalNodes > 0 && (
+                <div>
+                    <div className="flex justify-between mb-1 text-sm font-medium text-gray-600">
+                        <span>Progress</span>
+                        <span>{completedNodes} / {totalNodes} Steps ({progressPercent}%)</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div
-                        className="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out"
-                        style={{ width: `${progressPercentage}%` }}
-                        ></div>
+                        <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${progressPercent}%` }}></div>
                     </div>
                 </div>
-            )}
-
-
-            {/* Upcoming Milestones */}
-            {upcomingNodes.length > 0 && (
-              <div className="mb-4">
-                <h4 className="text-lg font-semibold mb-2 text-gray-600">Next Steps:</h4>
-                <ul className="list-disc list-inside space-y-1 text-gray-700">
-                  {upcomingNodes.map(node => (
-                    <li key={node._id}>
-                      <span className="font-medium">{node.resourceId?.title || 'Resource Title'}</span> ({node.resourceId?.type || 'Type'}) - <span className={`text-sm font-semibold ${node.completionStatus === 'In Progress' ? 'text-yellow-600' : 'text-gray-500'}`}>{node.completionStatus}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-             {totalNodes > 0 && completedNodes === totalNodes && (
-                 <p className="text-green-600 font-semibold mb-4">Congratulations! You've completed this path!</p>
              )}
 
 
             <Link
               to="/learning-path"
-              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+              className="inline-block mt-4 text-sm font-medium text-blue-600 hover:text-blue-800"
             >
-              View Full Path
+              View Full Path →
             </Link>
-          </>
+          </div>
         ) : (
-          <div>
+          <div className="text-center py-6 px-4 bg-gray-50 rounded-md">
             <p className="text-gray-600 mb-4">You don't have an active learning path yet.</p>
             <Link
-              to="/profile" // Link to profile to potentially update interests first? Or directly to a generate page/modal?
-              className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+              to="/generate-path" // Assuming you have a route/page for this
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-md text-sm transition duration-300 ease-in-out"
             >
               Generate Your First Path
             </Link>
-             <p className="text-sm text-gray-500 mt-2">We'll use your profile interests and goals to create a personalized path.</p>
           </div>
         )}
       </section>
 
-      {/* Other Sections (Optional) */}
-      {/* <section className="bg-white p-6 rounded-lg shadow border border-gray-200">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-700">Recommended Resources</h2>
-        {/* Fetch and display some general recommendations based on interests */}
-      {/* </section> */}
+      {/* Other Dashboard Sections (e.g., Recommended Resources, Stats) */}
+      {/* Use responsive grids for multiple cards */}
+      <section>
+         <h2 className="text-xl font-semibold text-gray-700 mb-4">Quick Actions</h2>
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Example Action Card */}
+            <div className="bg-white p-4 shadow rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+               <h3 className="font-medium text-gray-800 mb-2">Explore Resources</h3>
+               <p className="text-sm text-gray-600 mb-3">Find new articles, videos, and courses.</p>
+               <Link to="/resources" className="text-sm font-medium text-blue-600 hover:text-blue-800">Browse Library →</Link>
+            </div>
+             {/* Add more cards */}
+             <div className="bg-white p-4 shadow rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+               <h3 className="font-medium text-gray-800 mb-2">Update Profile</h3>
+               <p className="text-sm text-gray-600 mb-3">Adjust your goals and preferences.</p>
+               <Link to="/profile" className="text-sm font-medium text-blue-600 hover:text-blue-800">Edit Profile →</Link>
+            </div>
+         </div>
+      </section>
+
     </div>
   );
 }
