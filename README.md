@@ -211,6 +211,6 @@ You need to create `.env` files for both the server and client directories.
 
 ## License
 
-*   **[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+*   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 ---
