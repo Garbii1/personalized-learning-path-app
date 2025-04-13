@@ -1,10 +1,9 @@
-# LearnPath - Personalized Learning Path App
+# Learning Paths - Personalized Learning Path App
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
-LearnPath is a full-stack web application designed to generate personalized learning paths for students based on their interests, goals, and current knowledge level. This application aims to empower lifelong learners by providing curated resources and a clear roadmap for their educational journey. This project was built as a portfolio piece to showcase full-stack development skills.
+Learning Paths is a full-stack web application designed to generate personalized learning paths for students based on their interests, goals, and current knowledge level. This application aims to empower lifelong learners by providing curated resources and a clear roadmap for their educational journey. This project was built as a portfolio piece to showcase full-stack development skills.
 
-![LearnPath Dashboard Screenshot](./images/userdashboard.jpeg) 
+![Learning Paths Landing Page Screenshot](./images/landingpage.jpeg) 
 
 ---
 
@@ -23,6 +22,7 @@ LearnPath is a full-stack web application designed to generate personalized lear
 *   [Challenges Faced & Solutions](#challenges-faced--solutions)
 *   [Future Improvements](#future-improvements)
 *   [Author](#author)
+*   [License](#license)
 
 ---
 
@@ -40,13 +40,13 @@ Here are some glimpses of the LearnPath application:
 
 | Page                | Screenshot                                       |
 | :------------------ | :----------------------------------------------- |
-| Homepage            | ![Homepage](./images/homepage.jpeg)                   |
+| Homepage            | ![Homepage](./images/landingpage.jpeg)                   |
 | Login               | ![Login Page](./images/loginpage.jpeg)                |
-| Sign Up             | ![Sign Up Page](docs/signuppage.png)             |
-| Dashboard           | ![Dashboard](./images/userdashboard.jpeg)             |
-| Learning Path View  | ![Learning Path View](./images/generatedlearningpathview.jpeg) |
-| Resource Library    | ![Resource Library](./images/resourceslibrary.jpeg)   |
-| User Profile        | ![User Profile](./images/profilepage.jpeg)            |
+| Sign Up             | ![Sign Up Page](images/signuppage.jpeg)             |
+| Dashboard           | ![Dashboard](./images/dashboard.jpeg)             |
+| Learning Path View  | ![Learning Path View](./images/mypath.jpeg) |
+| Resource Library    | ![Resource Library](./images/resourcelibrary.jpeg)   |
+| User Profile        | ![User Profile](./images/profile.jpeg)            |
 
 
 ---
@@ -209,3 +209,8 @@ You need to create `.env` files for both the server and client directories.
 
 ---
 
+## License
+
+*   **[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+
+---
