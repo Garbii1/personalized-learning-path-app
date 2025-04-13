@@ -5,19 +5,27 @@
 
     {/* --- Favicon/Asset Links (Pointing to files in client/public/) --- */}
     {/* Ensure these files exist in client/public/ */}
+
+    {/* --- Primary Favicon --- */}
     <link rel="icon" type="image/png" href="/logo.png" /> {/* Ensure logo.png is in client/public */}
-    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" /> {/* Ensure favicon.ico is in client/public */}
-    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png" /> {/* Ensure apple-touch-icon.png is in client/public */}
-    <link rel="icon" type="image/png" sizes="192x192" href="/logo192.png" /> {/* Ensure logo192.png is in client/public */}
-    <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" /> {/* Ensure logo512.png is in client/public */}
-    <link rel="manifest" href="/manifest.json" /> {/* Ensure manifest.json is in client/public */}
+
+    {/* --- Optional/Enhancement Links (Commented Out) --- */}
+    <!-- <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" /> --> {/* Ensure favicon.ico is in client/public */}
+    <!-- <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png" /> --> {/* Ensure apple-touch-icon.png is in client/public */}
+    <!-- <link rel="icon" type="image/png" sizes="192x192" href="/logo192.png" /> --> {/* Ensure logo192.png is in client/public */}
+    <!-- <link rel="icon" type="image/png" sizes="512x512" href="/logo512.png" /> --> {/* Ensure logo512.png is in client/public */}
+    <!-- <link rel="manifest" href="/manifest.json" /> --> {/* Ensure manifest.json is in client/public */}
     {/* --- End Asset Links --- */}
 
+    {/* --- Essential Meta Tags --- */}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personalized Learning Path Generator</title> {/* Or "Learning Paths" */}
   </head>
   <body>
+    {/* --- Root Element for React App --- */}
     <div id="root"></div>
+
+    {/* --- Vite Development Entry Point --- */}
     {/* This script tag is correct for client/index.html - Vite handles it */}
     <script type="module" src="/src/main.jsx"></script>
   </body>
