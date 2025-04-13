@@ -3,10 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Import your videos (make sure paths are correct)
 import video1 from '../../assets/videos/girlreading.mp4';
-import video2 from '../../assets/videos/sketch.mp4';
-import video3 from '../../assets/videos/diversity.mp4';
 
-const videoSources = [video1, video2, video3]; // Add more as needed
+const videoSources = [video1]; // Add more as needed
 
 function HeroSection() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
