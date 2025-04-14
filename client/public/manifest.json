@@ -4,16 +4,21 @@
     "description": "Generate personalized learning paths based on interests, goals, and knowledge level.",
     "icons": [
       {
-        "src": "/logo192.png", // Path relative to web root (file must be in public/)
+        "src": "assets/images/logo192.png", // Path relative to web root (file must be in public/)
         "type": "image/png",
         "sizes": "192x192",
         "purpose": "any maskable" // Allows icon to adapt to different shapes
       },
       {
-        "src": "/logo512.png", // Path relative to web root (file must be in public/)
+        "src": "assets/images/logo512.png", // Path relative to web root (file must be in public/)
         "type": "image/png",
         "sizes": "512x512",
         "purpose": "any maskable"
+      },
+      {
+        "src": "assets/images/logo64.png", // Path relative to web root (file must be in public/)
+        "type": "image/png",
+        "sizes": "64x64"
       }
       // You can add more icon sizes if needed for different platforms
       // {
