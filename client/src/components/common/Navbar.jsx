@@ -53,7 +53,7 @@ function Navbar() {
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
               <img
                 className="h-8 w-auto sm:h-10" // Responsive logo size
-                src={logo}                 // Use the imported logo
+                src="/logo.png"                 // Use the imported logo
                 alt="Learning Paths Logo"  // Descriptive alt text
               />
             </Link>
